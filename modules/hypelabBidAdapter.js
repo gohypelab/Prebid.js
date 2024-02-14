@@ -99,7 +99,7 @@ function interpretResponse(serverResponse, bidRequest) {
     ad: data.html,
     mediaType: serverResponse.body.data.media_type,
     meta: {
-      advertiserDomains: data.advertiserDomains || [],
+      advertiserDomains: data.advertiser_domains || [],
     },
   };
 
