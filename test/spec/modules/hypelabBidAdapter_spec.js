@@ -211,6 +211,7 @@ describe('hypelabBidAdapter', function () {
       expect(data.ad).to.be.a('string');
       expect(data.mediaType).to.be.a('string');
       expect(data.meta.advertiserDomains).to.be.an('array');
+      expect(data.meta.advertiserDomains[0]).to.be.a('string');
     });
 
     describe('should return a blank array if cpm is not set', () => {

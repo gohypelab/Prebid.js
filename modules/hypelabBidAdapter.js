@@ -1,18 +1,18 @@
-import { registerBidder } from '../src/adapters/bidderFactory.js';
-import { BANNER } from '../src/mediaTypes.js';
-import { generateUUID } from '../src/utils.js';
-import { ajax } from '../src/ajax.js';
+import { registerBidder } from "../src/adapters/bidderFactory.js";
+import { BANNER } from "../src/mediaTypes.js";
+import { generateUUID } from "../src/utils.js";
+import { ajax } from "../src/ajax.js";
 
-export const BIDDER_CODE = 'hypelab';
-export const ENDPOINT_URL = 'https://api.hypelab.com';
+export const BIDDER_CODE = "hypelab";
+export const ENDPOINT_URL = "https://api.hypelab.com";
 
-export const REQUEST_ROUTE = '/v1/prebid_requests';
-export const EVENT_ROUTE = '/v1/events';
-export const REPORTING_ROUTE = '';
+export const REQUEST_ROUTE = "/v1/prebid_requests";
+export const EVENT_ROUTE = "/v1/events";
+export const REPORTING_ROUTE = "";
 
-const PREBID_VERSION = '$prebid.version$';
-const PROVIDER_NAME = 'prebid';
-const PROVIDER_VERSION = '0.0.1';
+const PREBID_VERSION = "$prebid.version$";
+const PROVIDER_NAME = "prebid";
+const PROVIDER_VERSION = "0.0.1";
 
 const url = (route) => ENDPOINT_URL + route;
 
@@ -43,10 +43,10 @@ function buildRequests(validBidRequests, bidderRequest) {
       placement_slug: request.params.placement_slug,
       provider_version: PROVIDER_VERSION,
       provider_name: PROVIDER_NAME,
-      referrer:
-        bidderRequest.refererInfo?.page || typeof window != 'undefined'
+      location:
+        bidderRequest.refererInfo?.page || typeof window != "undefined"
           ? window.location.href
-          : '',
+          : "",
       sdk_version: PREBID_VERSION,
       sizes: request.sizes,
       wids: [],
@@ -55,18 +55,18 @@ function buildRequests(validBidRequests, bidderRequest) {
       bidderRequestsCount: request.bidderRequestsCount,
       bidderWinsCount: request.bidderWinsCount,
       wp: {
-        ada: typeof window != 'undefined' && !!window.cardano,
-        bnb: typeof window != 'undefined' && !!window.BinanceChain,
-        eth: typeof window != 'undefined' && !!window.ethereum,
-        sol: typeof window != 'undefined' && !!window.solana,
-        tron: typeof window != 'undefined' && !!window.tron,
+        ada: typeof window != "undefined" && !!window.cardano,
+        bnb: typeof window != "undefined" && !!window.BinanceChain,
+        eth: typeof window != "undefined" && !!window.ethereum,
+        sol: typeof window != "undefined" && !!window.solana,
+        tron: typeof window != "undefined" && !!window.tron,
       },
     };
 
     return {
-      method: 'POST',
+      method: "POST",
       url: url(REQUEST_ROUTE),
-      options: { contentType: 'application/json', withCredentials: false },
+      options: { contentType: "application/json", withCredentials: false },
       data: payload,
       bidId: request.bidId,
     };
@@ -76,7 +76,7 @@ function buildRequests(validBidRequests, bidderRequest) {
 }
 
 function generateTemporaryUUID() {
-  return 'tmp_' + generateUUID();
+  return "tmp_" + generateUUID();
 }
 
 function interpretResponse(serverResponse, bidRequest) {
@@ -99,7 +99,7 @@ function interpretResponse(serverResponse, bidRequest) {
     ad: data.html,
     mediaType: serverResponse.body.data.media_type,
     meta: {
-      advertiserDomains: data.advertiserDomains || [],
+      advertiserDomains: data.advertiser_domains || [],
     },
   };
 
@@ -110,8 +110,8 @@ export function report(eventType, data, route = REPORTING_ROUTE) {
   if (!route) return;
 
   const options = {
-    method: 'POST',
-    contentType: 'application/json',
+    method: "POST",
+    contentType: "application/json",
     withCredentials: true,
   };
 
@@ -120,25 +120,25 @@ export function report(eventType, data, route = REPORTING_ROUTE) {
 }
 
 function onTimeout(timeoutData) {
-  this.report('timeout', timeoutData);
+  this.report("timeout", timeoutData);
 }
 
 function onBidWon(bid) {
-  this.report('bidWon', bid);
+  this.report("bidWon", bid);
 }
 
 function onSetTargeting(bid) {
-  this.report('setTargeting', bid);
+  this.report("setTargeting", bid);
 }
 
 function onBidderError(errorData) {
-  this.report('bidderError', errorData);
+  this.report("bidderError", errorData);
 }
 
 export const spec = {
   code: BIDDER_CODE,
   supportedMediaTypes: [BANNER],
-  aliases: ['hype'],
+  aliases: ["hype"],
   isBidRequestValid,
   buildRequests,
   interpretResponse,
@@ -147,7 +147,7 @@ export const spec = {
   onSetTargeting,
   onBidderError,
   report,
-  REPORTING_ROUTE: 'a',
+  REPORTING_ROUTE: "a",
 };
 
 registerBidder(spec);
