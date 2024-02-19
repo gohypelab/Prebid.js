@@ -43,7 +43,7 @@ function buildRequests(validBidRequests, bidderRequest) {
       placement_slug: request.params.placement_slug,
       provider_version: PROVIDER_VERSION,
       provider_name: PROVIDER_NAME,
-      referrer:
+      location:
         bidderRequest.refererInfo?.page || typeof window != "undefined"
           ? window.location.href
           : "",
