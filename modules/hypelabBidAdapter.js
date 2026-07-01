@@ -20,7 +20,7 @@ export const BIDDER_CODE = 'hypelab';
 export const ENDPOINT_URL = 'https://api.hypelab.com/v1/rtb_requests';
 
 const PREBID_VERSION = '$prebid.version$';
-const PROVIDER_VERSION = '0.0.4';
+const PROVIDER_VERSION = '0.0.5';
 
 const converter = ortbConverter({
   context: {
@@ -90,7 +90,7 @@ function buildRequests(bidRequests, bidderRequest) {
     method: 'POST',
     url: ENDPOINT_URL,
     data: converter.toORTB({ bidRequests: [bidRequest], bidderRequest }),
-    options: { contentType: 'text/plain', withCredentials: true },
+    options: { contentType: 'application/json', withCredentials: true },
   }));
 }
 

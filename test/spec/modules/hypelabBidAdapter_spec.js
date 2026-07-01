@@ -123,8 +123,8 @@ describe('hypelabBidAdapter', function () {
       expect(requests[0].options.withCredentials).to.equal(true);
     });
 
-    it('should send the POST payload as text/plain', function () {
-      expect(requests[0].options.contentType).to.equal('text/plain');
+    it('should send the POST payload as application/json', function () {
+      expect(requests[0].options.contentType).to.equal('application/json');
     });
 
     it('should include imp.ext.bidder with property_slug and placement_slug', function () {
@@ -153,7 +153,7 @@ describe('hypelabBidAdapter', function () {
     });
 
     it('should include ext.provider_version', function () {
-      expect(requests[0].data.ext.provider_version).to.equal('0.0.4');
+      expect(requests[0].data.ext.provider_version).to.equal('0.0.5');
     });
 
     it('should set at to 1', function () {
